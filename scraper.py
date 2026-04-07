@@ -19,7 +19,10 @@ class Chapter:
     @staticmethod
     def readFromJson(filename:str) -> "Chapter":
         with open (filename, 'r') as file:
-            chapterInfo = json.loads(file.readline())
+            try:
+                chapterInfo = json.loads(file.readline())
+            except:
+                chapterInfo = {"chapterName":"empty","link":"n/a","date":"0000-00-00T00:00:00+00:00"}
             return Chapter(**chapterInfo)
     @staticmethod
     def fetchLastedChapters() -> list["Chapter"]:
@@ -38,7 +41,7 @@ class Chapter:
             file.write(json.dumps({"chapterName": self.chapterName,"link":self.link,"date":self.date}))
 def main():
     chapterlist: list[Chapter] = Chapter.fetchLastedChapters()
-    chapterlist.sort(reverse=True)
+    chapterlist.sort()
     chapterlist[0].writeToJson("lastestChapter.json")
 
     print(Chapter.readFromJson("lastestChapter.json"))
