@@ -31,3 +31,7 @@ jobs:
    
     - name: Run Bot
       run: python -m bot ${{secrets.DISCORD_ID}}  ${{secrets.BOT_TOKEN}} 
+    
+    - uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "Automated changes"
