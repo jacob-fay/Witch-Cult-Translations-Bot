@@ -5,9 +5,10 @@
 name: Python application
 
 on:
+  
   schedule:
-    - cron: '0 3 * * *' #10am est
-    - cron: '0 12 * * *' #7pm est
+    - cron: '0 14 * * *'
+    - cron: '0 23 * * *'
 
 permissions:
   contents: write

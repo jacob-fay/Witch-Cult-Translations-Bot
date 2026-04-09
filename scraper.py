@@ -1,15 +1,19 @@
 import requests
 from bs4 import BeautifulSoup
+import datetime
 import json
 class Chapter:
-    ___slots__ = ("chapterName","link")
     def __init__(self,chapterName:str,link:str,date:str):
         self.chapterName =chapterName
         self.link = link
         self.date = date
     def _dateToInt(self) -> tuple[int, int, int,int,int,int]:
-        big,small = self.date.split("T")
-        return tuple(map(int, big.split("-")+small.split("+")[0].split(":")))
+        if (self.date.find("T") == -1):
+            small = None
+        else:
+            small = self.date.split("T")[1]
+        big = self.date.split("T")[0]
+        return tuple(map(int, big.split("-")+small.split("+")[0].split(":") if small is not None else []))
     def __gt__(self, other):
         return self._dateToInt() > other._dateToInt()
     def __eq__(self, other):
@@ -39,12 +43,14 @@ class Chapter:
     def writeToJson(self,filename:str):
         with open (filename,"w") as file:
             file.write(json.dumps({"chapterName": self.chapterName,"link":self.link,"date":self.date}))
-def main():
-    chapterlist: list[Chapter] = Chapter.fetchLastedChapters()
-    chapterlist.sort()
-    chapterlist[0].writeToJson("lastestChapter.json")
 
-    print(Chapter.readFromJson("lastestChapter.json"))
+
+def main():
+    # chapterlist: list[Chapter] = Chapter.fetchLastedChapters()
+    # chapterlist.sort()
+    # chapterlist[0].writeToJson("lastestChapter.json")
+    pass
+    # print(Chapter.readFromJson("lastestChapter.json"))
 if (__name__ == "__main__"):
     main()
 
