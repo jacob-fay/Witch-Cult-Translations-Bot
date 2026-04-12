@@ -40,7 +40,7 @@ def main():
 
     message = build_message("lastestChapter.json",True)
     message2 = build_message("jpsite.json",False)
-    trueMessage = message+"\n"+trueMessage
+    trueMessage = message+"\n"+message2
     if message == "":
         return  # nothing to send
 
