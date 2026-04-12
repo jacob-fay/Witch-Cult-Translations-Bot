@@ -23,7 +23,7 @@ def build_message(jsonLink: str,en: bool) -> str:
     chapters_not_read = [chapter for chapter in latest if (chapter > last_found)]
 
     if not chapters_not_read:
-        return None
+        return ""
 
     message = f"There have been {len(chapters_not_read)} new chapters posted\n"
 
