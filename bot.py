@@ -16,11 +16,10 @@ class MyClient(discord.Client):
         await self.close() 
 
 
-def build_message() -> str | None:
-    latest: list[Chapter] = Chapter.fetchLastedChapters()
-    last_found: Chapter = Chapter.readFromJson("lastestChapter.json")
+def build_message(jsonLink: str,en: bool) -> str:
+    latest: list[Chapter] = Chapter.fetchLastedChapters() if bool else Chapter.fetchJPChapters()
+    last_found: Chapter = Chapter.readFromJson(jsonLink)
     latest.sort()
-    print(latest[3].writeToJson("test.json"))
     chapters_not_read = [chapter for chapter in latest if (chapter > last_found)]
 
     if not chapters_not_read:
@@ -31,7 +30,7 @@ def build_message() -> str | None:
     for chapter in chapters_not_read:
         message += f"- Chapter Name: {chapter.chapterName}\n"
         message += f"  Link: <{chapter.link}>\n"
-    chapters_not_read[0].writeToJson("lastestChapter.json")
+    chapters_not_read[0].writeToJson(jsonLink)
     return message
 
 
@@ -39,8 +38,10 @@ def main():
     user_id = int(sys.argv[1])
     bot_token = sys.argv[2]
 
-    message = build_message()
-    if message is None:
+    message = build_message("lastestChapter.json",True)
+    message2 = build_message("jpsite.json",False)
+    trueMessage = message+"\n"+trueMessage
+    if message == "":
         return  # nothing to send
 
     intents = discord.Intents.default()
