@@ -3,11 +3,11 @@ from bs4 import BeautifulSoup
 import datetime
 import json
 class Chapter:
-    def __init__(self,chapterName:str,link:str,date:str,pagnation: int | None = None):
+    def __init__(self,chapterName:str,link:str,date:str,lastPagnation: int | None = None):
         self.chapterName =chapterName
         self.link = link
         self.date = date
-        self.pagnation = pagnation
+        self.lastPagnation = lastPagnation
     def _dateToInt(self) -> tuple[int, int, int,int,int,int]:
         if (self.date.find("T") == -1):
             small = None
@@ -74,8 +74,8 @@ class Chapter:
                 "date": self.date,
                     }
 
-            if self.pagnation is not None:
-                data["lastPagnation"] = self.pagnation
+            if self.lastPagnation is not None:
+                data["lastPagnation"] = self.lastPagnation
 
             file.write(json.dumps(data))
 
