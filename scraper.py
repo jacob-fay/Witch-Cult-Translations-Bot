@@ -9,6 +9,8 @@ class Chapter:
         self.date = date
         self.lastPagnation = lastPagnation
     def _dateToInt(self) -> tuple[int, int, int,int,int,int]:
+        if ("/" in self.date):
+            return tuple(map(int,self.date.split("/")))
         if (self.date.find("T") == -1):
             small = None
         else:
