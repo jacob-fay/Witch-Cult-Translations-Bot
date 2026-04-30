@@ -59,7 +59,7 @@ class Chapter:
             lastPeg+=-1
             site = session.get(baseUrl+str(lastPeg))
         bs = BeautifulSoup(site.text,("html.parser"))
-        recentChapters = [x for x in bs.find_all("div",class_="p-eplist__sublist")[-5:-1]]
+        recentChapters = [x for x in bs.find_all("div",class_="p-eplist__sublist")[-5:]]
         chapters: list["Chapter"] = []
         for chapter in recentChapters:
             time =  chapter.find("div",class_="p-eplist__update").text.split(" ")[0].strip("\n")
